@@ -183,6 +183,8 @@ final class WooFramework_Tweaks {
 ?>
 	</div><!--/.wrap-->
 <?php
+		// This must be present if using fields that require Javascript or styling.
+		add_action( 'admin_footer', array( $this->_field_obj, 'maybe_enqueue_field_assets' ) );
 	} // End admin_screen()
 
 	/**
