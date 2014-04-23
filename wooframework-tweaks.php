@@ -210,36 +210,30 @@ final class WooFramework_Tweaks {
 	 * @return  void
 	 */
 	public function admin_screen_logic () {
-		/*$is_processed = false;
-		// Save logic.
-		if ( isset( $_POST['submit'] ) && check_admin_referer( 'woometa-options-update' ) ) {
-			$fields_to_skip = array( 'submit', '_wp_http_referer', '_wpnonce' );
+		if ( ! empty( $_POST ) && check_admin_referer( $this->_field_obj->__get( 'token' ) . '_nonce', $this->_field_obj->__get( 'token' ) . '_nonce' ) ) {
+			$data = $_POST;
 
-			$posted_data = $_POST;
+			$page = 'wf-tweaks';
+			if ( isset( $data['page'] ) ) {
+				$page = $data['page'];
+				unset( $data['page'] );
+			}
 
-			foreach ( $posted_data as $k => $v ) {
-				if ( in_array( $k, $fields_to_skip ) || ! $this->is_valid_meta_key( $k ) ) {
-					unset( $posted_data[$k] );
-				} else {
-					$posted_data[$k] = wp_filter_post_kses( $v );
+			$data = $this->_field_obj->validate_fields( $data );
+
+			if ( 0 < count( $data ) ) {
+				foreach ( $data as $k => $v ) {
+					update_option( $k, $v );
 				}
 			}
 
-			if ( is_array( $posted_data ) ) {
-				$is_updated = update_option( $this->plugin_prefix . 'stored_meta', $posted_data );
+			// Redirect on settings save, and exit.
+			$url = add_query_arg( 'page', $page );
+			$url = add_query_arg( 'updated', 'true', $url );
 
-				// Redirect to make sure the latest changes are reflected.
-				$file = 'themes.php';
-				if ( 'woothemes' == $this->admin_parent_page ) {
-					$file = 'admin.php';
-				}
-
-				// Redirect to make sure the latest changes are reflected.
-				wp_safe_redirect( admin_url( $file . '?page=filters&updated=true' ) );
-				exit;
-			}
-			$is_processed = true;
-		}*/
+			wp_safe_redirect( $url );
+			exit;
+		}
 	} // End admin_screen_logic()
 
 	/**
