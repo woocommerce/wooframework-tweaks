@@ -151,6 +151,9 @@ final class WooFramework_Tweaks {
 
 		// Add contextual help tabs.
 		add_action( 'load-' . $this->admin_page, array( $this, 'admin_screen_help' ) );
+
+		// Add admin notices.
+		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 	} // End register_admin_screen()
 
 	/**
@@ -186,6 +189,28 @@ final class WooFramework_Tweaks {
 		// This must be present if using fields that require Javascript or styling.
 		add_action( 'admin_footer', array( $this->_field_obj, 'maybe_enqueue_field_assets' ) );
 	} // End admin_screen()
+
+	/**
+	 * Display admin notices for this settings screen.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  void
+	 */
+	public function admin_notices () {
+		$notices = array();
+
+		if ( isset( $_GET['page'] ) && 'wf-tweaks' == $_GET['page'] && isset( $_GET['updated'] ) && 'true' == $_GET['updated'] ) {
+			$notices['settings-updated'] = array( 'type' => 'updated', 'message' => __( 'Settings saved.', 'wooframework-tweaks' ) );
+		}
+
+		if ( 0 < count( $notices ) ) {
+			$html = '';
+			foreach ( $notices as $k => $v ) {
+				$html .= '<div id="' . esc_attr( $k ) . '" class="fade ' . esc_attr( $v['type'] ) . '">' . wpautop( '<strong>' . esc_html( $v['message'] ) . '</strong>' ) . '</div>' . "\n";
+			}
+			echo $html;
+		}
+	} // End admin_notices()
 
 	/**
 	 * Load contextual help for the admin screen.
