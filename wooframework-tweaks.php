@@ -140,6 +140,10 @@ final class WooFramework_Tweaks {
 				add_filter( 'wf_disable_generator_tags', '__return_true' );
 			}
 		}
+
+		// Placeholders are in both the frontend and admin, so apply this globally.
+		add_filter( 'wf_placeholder_image_url', array( $this, 'maybe_override_placeholder_image_url' ) );
+		add_filter( 'wf_placeholder_image_path', array( $this, 'maybe_override_placeholder_image_path' ) );
 	} // End init()
 
 	/**
@@ -304,6 +308,37 @@ final class WooFramework_Tweaks {
 		}
 		return $username;
 	} // End maybe_apply_super_user()
+
+	/**
+	 * Maybe override the placeholder image URL.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  array
+	 */
+	public function maybe_override_placeholder_image_url ( $url ) {
+		$placeholder_image_url = get_option( 'framework_woo_default_image', '' );
+		if ( '' != $placeholder_image_url ) {
+			$url = esc_url( $placeholder_image_url );
+		}
+		return $url;
+	} // End maybe_override_placeholder_image_url()
+
+	/**
+	 * Maybe override the placeholder image path.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  array
+	 */
+	public function maybe_override_placeholder_image_path ( $path ) {
+		$placeholder_image_id = get_option( 'framework_woo_default_image-id', 0 );
+		if ( 0 < intval( $placeholder_image_id ) ) {
+			$file_path = get_attached_file( $placeholder_image_id );
+			if ( '' != $file_path ) {
+				$path = $file_path;
+			}
+		}
+		return $path;
+	} // End maybe_override_placeholder_image_path()
 
 	/**
 	 * Return an array of the settings scafolding. The field types, names, etc.
