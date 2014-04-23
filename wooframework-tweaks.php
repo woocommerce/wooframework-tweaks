@@ -403,12 +403,6 @@ final class WooFramework_Tweaks {
 										'id' => 'framework_woo_super_user',
 										'type' => 'text'
 										),
-				'framework_woo_backupmenu_disable' => array(
-										'desc' => __( 'Disable the "Backup" Feature', 'wooframework-tweaks' ),
-										'std' => '',
-										'id' => 'framework_woo_backupmenu_disable',
-										'type' => 'checkbox'
-										),
 				'framework_woo_disable_generator' => array(
 										'desc' => __( 'Disable the "Generator" META tags', 'wooframework-tweaks' ),
 										'std' => '',
