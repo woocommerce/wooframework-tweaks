@@ -1,0 +1,104 @@
+# Copyright (C) 2014 WooFramework Tweaks
+# This file is distributed under the same license as the WooFramework Tweaks package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooFramework Tweaks 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wooframework-tweaks\n"
+"POT-Creation-Date: 2014-04-23 10:21:35+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wooframework-tweaks.php:164 wooframework-tweaks.php:387
+msgid "Tweaks"
+msgstr ""
+
+#: wooframework-tweaks.php:188
+msgid "It appears your theme does not contain the WooFramework. In order to use the WooFramework Tweaks, please use a theme which makes use of the WooFramework."
+msgstr ""
+
+#: wooframework-tweaks.php:192
+msgid "It appears you're using an older version of the WooFramework. WooFramework Tweaks requires WooFramework 6.0 or higher."
+msgstr ""
+
+#: wooframework-tweaks.php:220
+msgid "Settings saved."
+msgstr ""
+
+#: wooframework-tweaks.php:243
+msgid "Configure the tweaks and hit the \"Save Changes\" button. It's as easy as that!"
+msgstr ""
+
+#: wooframework-tweaks.php:244
+msgid "For more information:"
+msgstr ""
+
+#: wooframework-tweaks.php:245
+msgid "<a href=\"%s\" target=\"_blank\">WooThemes Help Desk</a>"
+msgstr ""
+
+#: wooframework-tweaks.php:247
+msgid "Overview"
+msgstr ""
+
+#: wooframework-tweaks.php:393
+msgid "Placeholder Image"
+msgstr ""
+
+#: wooframework-tweaks.php:394
+msgid "Specify a placeholder image to use within the woo_image() function."
+msgstr ""
+
+#: wooframework-tweaks.php:400
+msgid "Super User"
+msgstr ""
+
+#: wooframework-tweaks.php:401
+msgid "Enter your username to hide the \"Framework\" screen and features from other administrators."
+msgstr ""
+
+#: wooframework-tweaks.php:401
+msgid "This can be reset from the %s under %s."
+msgstr ""
+
+#: wooframework-tweaks.php:401
+msgid "WordPress Options Screen"
+msgstr ""
+
+#: wooframework-tweaks.php:407
+msgid "Disable the \"Generator\" META tags"
+msgstr ""
+
+#: wooframework-tweaks.php:413
+msgid "Disable the shortcodes stylesheet"
+msgstr ""
+
+#: wooframework-tweaks.php:419
+msgid "Output the Tracking Code setting in the Header"
+msgstr ""
+
+#: wooframework-tweaks.php:459 wooframework-tweaks.php:468
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "WooFramework Tweaks"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/woothemes/wooframework-tweaks/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Hidey ho, neighborino! Lets add a few options back to the WooFramework, for a bit of extra fine tuning, shall we?"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "WooThemes"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://woothemes.com/"
+msgstr ""
