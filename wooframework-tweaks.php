@@ -153,6 +153,9 @@ final class WooFramework_Tweaks {
 	 * @return  void
 	 */
 	public function register_admin_screen () {
+		// Make sure only super users and the last editor are allowed in.
+		if ( ! $this->can_user_view_tweaks() ) return;
+
 		$this->admin_parent_page = 'themes.php';
 		if ( defined( 'THEME_FRAMEWORK' ) && 'woothemes' == constant( 'THEME_FRAMEWORK' ) ) {
 			$this->admin_parent_page = 'woothemes';
@@ -268,6 +271,10 @@ final class WooFramework_Tweaks {
 				}
 			}
 
+			// Keep track of the last username to edit the tweaks screen, so as least one user is never locked out. :)
+			$user_id = get_current_user_id();
+			update_option( 'framework_woo_last_tweaks_editor', intval( $user_id ) );
+
 			// Redirect on settings save, and exit.
 			$url = add_query_arg( 'page', $page );
 			$url = add_query_arg( 'updated', 'true', $url );
@@ -339,6 +346,33 @@ final class WooFramework_Tweaks {
 		}
 		return $path;
 	} // End maybe_override_placeholder_image_path()
+
+	/**
+	 * Determine if the current user can view the tweaks admin screen.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  array
+	 */
+	public function can_user_view_tweaks () {
+		$response = false;
+		$user_id = get_current_user_id();
+		$super_username = get_option( 'framework_woo_super_user', '' );
+		if ( '' == $super_username ) {
+			$response = true;
+		} else {
+			if ( $user_id == (int) get_option( 'framework_woo_last_tweaks_editor', 0 ) ) {
+				$response = true;
+			}
+			$super_user = get_userdatabylogin( $super_username );
+			$current_user = get_userdata( $user_id );
+			if ( is_a( $super_user, 'WP_User' ) && isset( $super_user->ID ) && is_a( $current_user, 'WP_User' ) && isset( $current_user->ID ) ) {
+				if ( $super_user->ID == $current_user->ID ) {
+					$response = true;
+				}
+			}
+		}
+		return $response;
+	} // End can_user_view_tweaks()
 
 	/**
 	 * Return an array of the settings scafolding. The field types, names, etc.
