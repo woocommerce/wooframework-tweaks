@@ -131,8 +131,14 @@ final class WooFramework_Tweaks {
 				$this->_field_obj->init( $this->get_settings_template() );
 				$this->_field_obj->__set( 'token', 'framework_woo' );
 			}
-		} else {
 
+			// If a super user is specified, apply the filter.
+			add_filter( 'wf_super_user', array( $this, 'maybe_apply_super_user' ) );
+		} else {
+			// Maybe disable the generator tag.
+			if ( 'true' == get_option( 'framework_woo_disable_generator', 'false' ) ) {
+				add_filter( 'wf_disable_generator_tags', '__return_true' );
+			}
 		}
 	} // End init()
 
@@ -281,6 +287,23 @@ final class WooFramework_Tweaks {
 			}
 		}
 	} // End maybe_clean_superuser_entry()
+
+	/**
+	 * Maybe apply the super user to the filter.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  array
+	 */
+	public function maybe_apply_super_user ( $username ) {
+		$super_username = get_option( 'framework_woo_super_user', '' );
+		if ( '' == $super_username ) return $username;
+
+		$user = get_userdatabylogin( $super_username );
+		if ( is_a( $user, 'WP_User' ) && isset( $user->user_login ) ) {
+			$username = $user->user_login;
+		}
+		return $username;
+	} // End maybe_apply_super_user()
 
 	/**
 	 * Return an array of the settings scafolding. The field types, names, etc.
