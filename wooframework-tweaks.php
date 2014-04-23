@@ -121,6 +121,10 @@ final class WooFramework_Tweaks {
 			// Register the admin screen.
 			add_action( 'admin_menu', array( $this, 'register_admin_screen' ) );
 
+			// Make sure we clean out the super user, when deleting the user from the database.
+			// This has to be done on `delete_user` rather than `deleted_user`, as we still require the username and are only passed the user ID.
+			add_action( 'delete_user', array( $this, 'maybe_clean_superuser_entry' ) );
+
 			// If applicable, instantiate WF_Fields from the WooFramework.
 			if ( defined( 'THEME_FRAMEWORK' ) && 'woothemes' == constant( 'THEME_FRAMEWORK' ) && class_exists( 'WF_Fields' ) ) {
 				$this->_field_obj = new WF_Fields();
@@ -264,9 +268,24 @@ final class WooFramework_Tweaks {
 	} // End admin_screen_logic()
 
 	/**
+	 * If our super user is removed from the database, clear out the super user entry.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  array
+	 */
+	public function maybe_clean_superuser_entry ( $user_id ) {
+		$user = get_userdata( (int) $user_id );
+		if ( is_a( $user, 'WP_User' ) && isset( $user->user_login ) ) {
+			if ( $user->user_login == get_option( 'framework_woo_super_user', '' ) ) {
+				update_option( 'framework_woo_super_user', '' );
+			}
+		}
+	} // End maybe_clean_superuser_entry()
+
+	/**
 	 * Return an array of the settings scafolding. The field types, names, etc.
 	 * @access  public
-	 * @since   6.0.0
+	 * @since   1.0.0
 	 * @return  array
 	 */
 	public function get_settings_template () {
