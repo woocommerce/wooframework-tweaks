@@ -121,6 +121,9 @@ final class WooFramework_Tweaks {
 			// Register the admin screen.
 			add_action( 'admin_menu', array( $this, 'register_admin_screen' ) );
 
+			// Register the admin screen to be able to load the WooFramework's CSS and other assets.
+			add_filter( 'wf_load_admin_css', array( $this, 'register_screen_id' ) );
+
 			// Make sure we clean out the super user, when deleting the user from the database.
 			// This has to be done on `delete_user` rather than `deleted_user`, as we still require the username and are only passed the user ID.
 			add_action( 'delete_user', array( $this, 'maybe_clean_superuser_entry' ) );
@@ -145,6 +148,19 @@ final class WooFramework_Tweaks {
 		add_filter( 'wf_placeholder_image_url', array( $this, 'maybe_override_placeholder_image_url' ) );
 		add_filter( 'wf_placeholder_image_path', array( $this, 'maybe_override_placeholder_image_path' ) );
 	} // End init()
+
+	/**
+	 * Register the screen ID with the WooFramework's asset loader.
+	 * @access  public
+	 * @since   1.0.0
+	 * @return  void
+	 */
+	public function register_screen_id ( $screens ) {
+		if ( ! in_array( 'wf-tweaks', $screens ) ) {
+			$screens[] = 'wf-tweaks';
+		}
+		return $screens;
+	} // End register_screen_id()
 
 	/**
 	 * Register the admin screen within WordPress.
