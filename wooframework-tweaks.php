@@ -502,7 +502,7 @@ final class WooFramework_Tweaks {
 	 */
 	private function _log_version_number () {
 		// Log the version number.
-		update_option( $this->token . '_version', $this->version );
+		update_option( $this->token . '-version', $this->version );
 	} // End _log_version_number()
 } // End Class
 ?>
