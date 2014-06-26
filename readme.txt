@@ -2,13 +2,13 @@
 Contributors: woothemes,mattyza
 Donate link: http://woothemes.com/
 Tags: wooframework,settings
-Requires at least: 3.9
-Tested up to: 3.9
+Requires at least: 3.9.1
+Tested up to: 3.9.1
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Tweak a few of the WooFramework filters, via a neat interface.
+Tweak a few of the WooFramework's filters and features, via a neat interface.
 
 == Description ==
 
@@ -47,11 +47,11 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 == Upgrade Notice ==
 
 = 1.0.0 =
-* 2014-05-13
+* 2014-07-03
 * Initial release. Woo!
 
 == Changelog ==
 
 = 1.0.0 =
-* 2014-05-13
+* 2014-07-03
 * Initial release. Woo!

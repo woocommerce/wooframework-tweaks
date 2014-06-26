@@ -6,8 +6,8 @@
  * Version: 1.0.0
  * Author: WooThemes
  * Author URI: http://woothemes.com/
- * Requires at least: 3.8.3
- * Tested up to: 3.9.0
+ * Requires at least: 3.9.1
+ * Tested up to: 3.9.1
  *
  * Text Domain: wooframework-tweaks
  * Domain Path: /languages/
