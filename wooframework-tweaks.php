@@ -3,7 +3,7 @@
  * Plugin Name: WooFramework Tweaks
  * Plugin URI: http://github.com/woothemes/wooframework-tweaks/
  * Description: Hidey ho, neighborino! Lets add a few options back to the WooFramework, for a bit of extra fine tuning, shall we?
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: WooThemes
  * Author URI: http://woothemes.com/
  * Requires at least: 3.9.1
@@ -99,7 +99,7 @@ final class WooFramework_Tweaks {
 		$this->token 			= 'wooframework-tweaks';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.0.0';
+		$this->version 			= '1.0.1';
 		$this->_field_obj 		= null;
 
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
@@ -107,6 +107,8 @@ final class WooFramework_Tweaks {
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// We need to run this only once the theme is setup and ready.
+		add_action( 'after_setup_theme', array( $this, 'init_admin' ) );
+		add_action( 'plugins_loaded', array( $this, 'init_frontend' ) );
 		add_action( 'after_setup_theme', array( $this, 'init' ) );
 	} // End __construct()
 
@@ -117,6 +119,18 @@ final class WooFramework_Tweaks {
 	 * @return void
 	 */
 	public function init () {
+		// Placeholders are in both the frontend and admin, so apply this globally.
+		add_filter( 'wf_placeholder_image_url', array( $this, 'maybe_override_placeholder_image_url' ) );
+		add_filter( 'wf_placeholder_image_path', array( $this, 'maybe_override_placeholder_image_path' ) );
+	} // End init()
+
+	/**
+	 * Initialise the plugin admin.
+	 * @access public
+	 * @since  1.0.1
+	 * @return void
+	 */
+	public function init_admin () {
 		if ( is_admin() ) {
 			// Register the admin screen.
 			add_action( 'admin_menu', array( $this, 'register_admin_screen' ) );
@@ -137,17 +151,23 @@ final class WooFramework_Tweaks {
 
 			// If a super user is specified, apply the filter.
 			add_filter( 'wf_super_user', array( $this, 'maybe_apply_super_user' ) );
-		} else {
+		} // End If Statement
+	} // End init_admin()
+
+	/**
+	 * Initialise the plugin frontend.
+	 * @access public
+	 * @since  1.0.1
+	 * @return void
+	 */
+	public function init_frontend () {
+		if ( !is_admin() ) {
 			// Maybe disable the generator tag.
-			if ( 'true' == get_option( 'framework_woo_disable_generator', 'false' ) ) {
+			if ( 'true' == get_option( 'framework_woo_disable_generator', 'false' ) ) { 
 				add_filter( 'wf_disable_generator_tags', '__return_true' );
 			}
-		}
-
-		// Placeholders are in both the frontend and admin, so apply this globally.
-		add_filter( 'wf_placeholder_image_url', array( $this, 'maybe_override_placeholder_image_url' ) );
-		add_filter( 'wf_placeholder_image_path', array( $this, 'maybe_override_placeholder_image_path' ) );
-	} // End init()
+		} // End If Statement
+	} // End init_frontend()
 
 	/**
 	 * Register the screen ID with the WooFramework's asset loader.
@@ -184,6 +204,9 @@ final class WooFramework_Tweaks {
 
 		// Add contextual help tabs.
 		add_action( 'load-' . $this->admin_page, array( $this, 'admin_screen_help' ) );
+
+		// Make sure our data is added to the WooFramework settings exporter.
+		add_filter( 'wooframework_export_query_inner', array( $this, 'add_exporter_data' ) );
 
 		// Add admin notices.
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
@@ -420,19 +443,19 @@ final class WooFramework_Tweaks {
 										'type' => 'text'
 										),
 				'framework_woo_disable_generator' => array(
-										'desc' => __( 'Disable the "Generator" META tags', 'wooframework-tweaks' ),
+										'desc' => __( 'Disable the "Generator" META tags', 'wooframework-tweaks' ) . '<p class="description">' . __( "Removes the meta tags which show the current theme and WooFramework version in your site's source code.", 'wooframework-tweaks' ) . '</p>',
 										'std' => '',
 										'id' => 'framework_woo_disable_generator',
 										'type' => 'checkbox'
 										),
 				'framework_woo_disable_shortcodes' => array(
-										'desc' => __( 'Disable the shortcodes stylesheet', 'wooframework-tweaks' ),
+										'desc' => __( 'Disable the shortcodes stylesheet', 'wooframework-tweaks' ) . '<p class="description">' . __( "Removes the CSS styles for all WooThemes theme shortcodes.", 'wooframework-tweaks' ) . '</p>',
 										'std' => '',
 										'id' => 'framework_woo_disable_shortcodes',
 										'type' => 'checkbox'
 										),
 				'framework_woo_move_tracking_code' => array(
-										'desc' => __( 'Output the Tracking Code setting in the Header', 'wooframework-tweaks' ),
+										'desc' => __( 'Output the Tracking Code setting in the Header', 'wooframework-tweaks' ) . '<p class="description">' . __( "Moves the output of your theme's 'Tracking Code' setting from the footer to the header.", 'wooframework-tweaks' ) . '</p>',
 										'std' => '',
 										'id' => 'framework_woo_move_tracking_code',
 										'type' => 'checkbox'
@@ -504,5 +527,26 @@ final class WooFramework_Tweaks {
 		// Log the version number.
 		update_option( $this->token . '-version', $this->version );
 	} // End _log_version_number()
+
+	/**
+ 	 * Add our saved data to the WooFramework data exporter.
+ 	 * @access  public
+	 * @since   1.0.1
+ 	 * @param   string $data SQL query.
+ 	 * @return  string SQL query.
+ 	 */
+	public function add_exporter_data ( $data ) {
+		$option_keys = array(
+								'framework_woo_disable_generator',
+								'framework_woo_default_image',
+								'framework_woo_default_image-id',
+								'framework_woo_super_user',
+								'framework_woo_last_tweaks_editor',
+								);
+		foreach ( $option_keys as $key ) {
+			$data .= " OR option_name = '" . $key . "'";
+		} // End For Loop
+		return $data;
+	} // End add_exporter_data()
 } // End Class
 ?>
