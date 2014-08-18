@@ -1,10 +1,10 @@
 === WooFramework Tweaks ===
-Contributors: woothemes,mattyza
+Contributors: woothemes,mattyza,jeffikus
 Donate link: http://woothemes.com/
 Tags: wooframework,settings
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -46,11 +46,23 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Upgrade Notice ==
 
+= 1.0.1 =
+* 2014-08-18
+* Adds WF export capabilities
+* Adds better descriptions for tweaks options
+* Fixes generator removal logic
+
 = 1.0.0 =
 * 2014-07-03
 * Initial release. Woo!
 
 == Changelog ==
+
+= 1.0.1 =
+* 2014-08-18
+* Adds WF export capabilities
+* Adds better descriptions for tweaks options
+* Fixes generator removal logic
 
 = 1.0.0 =
 * 2014-07-03
