@@ -3,11 +3,11 @@
  * Plugin Name: WooFramework Tweaks
  * Plugin URI: http://github.com/woothemes/wooframework-tweaks/
  * Description: Hidey ho, neighborino! Lets add a few options back to the WooFramework, for a bit of extra fine tuning, shall we?
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: WooThemes
  * Author URI: http://woothemes.com/
  * Requires at least: 3.9.1
- * Tested up to: 3.9.1
+ * Tested up to: 4.1.1
  *
  * Text Domain: wooframework-tweaks
  * Domain Path: /languages/
@@ -318,7 +318,7 @@ final class WooFramework_Tweaks {
 			$url = add_query_arg( 'page', $page );
 			$url = add_query_arg( 'updated', 'true', $url );
 
-			wp_safe_redirect( $url );
+			wp_safe_redirect( esc_url( $url ) );
 			exit;
 		}
 	} // End admin_screen_logic()
