@@ -4,7 +4,7 @@ Donate link: http://woothemes.com/
 Tags: wooframework,settings
 Requires at least: 3.9.1
 Tested up to: 4.1.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -46,6 +46,10 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 
 == Upgrade Notice ==
 
+= 1.0.3 =
+* 2015-05-25
+* Changes deprecated function
+
 = 1.0.2 =
 * 2015-04-22
 * Security Fix for add_query_arg vulnerability
@@ -61,6 +65,10 @@ We encourage everyone to contribute their ideas, thoughts and code snippets. Thi
 * Initial release. Woo!
 
 == Changelog ==
+
+= 1.0.3 =
+* 2015-05-25
+* Changes deprecated function
 
 = 1.0.2 =
 * 2015-04-22

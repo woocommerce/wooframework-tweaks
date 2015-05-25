@@ -3,7 +3,7 @@
  * Plugin Name: WooFramework Tweaks
  * Plugin URI: http://github.com/woothemes/wooframework-tweaks/
  * Description: Hidey ho, neighborino! Lets add a few options back to the WooFramework, for a bit of extra fine tuning, shall we?
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: WooThemes
  * Author URI: http://woothemes.com/
  * Requires at least: 3.9.1
@@ -163,7 +163,7 @@ final class WooFramework_Tweaks {
 	public function init_frontend () {
 		if ( !is_admin() ) {
 			// Maybe disable the generator tag.
-			if ( 'true' == get_option( 'framework_woo_disable_generator', 'false' ) ) { 
+			if ( 'true' == get_option( 'framework_woo_disable_generator', 'false' ) ) {
 				add_filter( 'wf_disable_generator_tags', '__return_true' );
 			}
 		} // End If Statement
