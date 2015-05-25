@@ -348,7 +348,7 @@ final class WooFramework_Tweaks {
 		$super_username = get_option( 'framework_woo_super_user', '' );
 		if ( '' == $super_username ) return $username;
 
-		$user = get_userdatabylogin( $super_username );
+		$user = get_user_by( 'login', $super_username );
 		if ( is_a( $user, 'WP_User' ) && isset( $user->user_login ) ) {
 			$username = $user->user_login;
 		}
@@ -402,7 +402,7 @@ final class WooFramework_Tweaks {
 			if ( $user_id == (int) get_option( 'framework_woo_last_tweaks_editor', 0 ) ) {
 				$response = true;
 			}
-			$super_user = get_userdatabylogin( $super_username );
+			$super_user = get_user_by( 'login', $super_username );
 			$current_user = get_userdata( $user_id );
 			if ( is_a( $super_user, 'WP_User' ) && isset( $super_user->ID ) && is_a( $current_user, 'WP_User' ) && isset( $current_user->ID ) ) {
 				if ( $super_user->ID == $current_user->ID ) {
